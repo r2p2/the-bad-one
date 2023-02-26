@@ -34,6 +34,14 @@ public:
   Expected(Unexpected<E> &&e)
       : has_value_(false), unexpected_(std::forward<Unexpected<E>>(e)) {}
 
+  ~Expected() {
+    if (has_value()) {
+      value_.~value_type();
+    } else {
+      unexpected_.~unexpected_type();
+    }
+  }
+
   auto has_value() const -> bool { return has_value_; }
 
   auto value() const -> T const & {
@@ -51,7 +59,7 @@ public:
   }
 
   auto error() const -> E const & {
-    if (has_value_) {
+    if (has_value()) {
       throw BadExpectedAccess{};
     }
     return unexpected_.unexpected;

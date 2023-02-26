@@ -3,6 +3,8 @@ project(the-bad-one)
 
 set(COMPILE_FLAGS on)
 
+add_subdirectory(libs/catch2)
+
 add_executable(the-bad-one
     src/main.cc
 )
@@ -12,10 +14,14 @@ target_compile_options(the-bad-one PRIVATE
 )
 
 add_executable(tests
-    tests/tests.cc
+    tests/main.cc
+    tests/expected_test.cc
 )
 target_include_directories(tests
   PRIVATE src/
+)
+target_link_libraries(tests
+  PRIVATE Catch2WithMain
 )
 target_compile_options(the-bad-one PRIVATE
   $<$<CXX_COMPILER_ID:MSVC>:/WX /W4>

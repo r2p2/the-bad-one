@@ -27,3 +27,9 @@ TEST_CASE("expected with error", "[expected]") {
   REQUIRE(result.error() == DivError::DivByZero);
   REQUIRE_THROWS_AS(result.value(), BadExpectedAccess);
 }
+
+TEST_CASE("void as success value", "[expected]") {
+  Expected<Void, int> expected{Void{}};
+
+  REQUIRE(expected.has_value() == true);
+}

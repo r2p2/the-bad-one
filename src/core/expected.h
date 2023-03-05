@@ -24,6 +24,8 @@ template <class E> auto unexpected(E &&e) -> Unexpected<E> {
   return Unexpected<E>(std::forward<E>(e));
 }
 
+struct Void {};
+
 template <class T, class E> class Expected {
 public:
   using value_type = T;
